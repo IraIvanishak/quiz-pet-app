@@ -17,7 +17,16 @@ Follow these steps to get the project up and running on your local machine.
 
 - Go programming language installed.
 - PostgreSQL database set up.
+  
+### Dependencies
 
+Run the following commands to fetch and install the project dependencies:
+```bash
+   cd back
+```
+```bash
+   go mod download
+```
 ### Database Configuration
 
 1. Create a PostgreSQL database for the application.
