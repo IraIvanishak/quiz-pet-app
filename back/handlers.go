@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/IraIvanishak/questionnaire_pet/models/quizes"
+	"github.com/IraIvanishak/quiz-pet-app/models/quizes"
 )
 
 func getAllTestPreview(w http.ResponseWriter, r *http.Request) {

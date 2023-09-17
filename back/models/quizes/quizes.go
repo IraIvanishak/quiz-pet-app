@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/IraIvanishak/questionnaire_pet/config"
+	"github.com/IraIvanishak/quiz-pet-app/config"
 )
 
 type Test_preview struct {
@@ -26,7 +26,7 @@ type Question struct {
 type Option struct {
 	Option_id   int    `json:"option_id"`
 	Option_text string `json:"option_text"`
-	is_correct  bool   `json:"is_correct"`
+	is_correct  bool
 }
 
 func AllTestPreview() ([]Test_preview, error) {
