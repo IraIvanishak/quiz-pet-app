@@ -1,4 +1,3 @@
-// Create a reusable function for making GET requests
 function makeGetRequest(url, callback) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -16,7 +15,6 @@ function makeGetRequest(url, callback) {
     xhr.send();
 }
 
-// Function to load and display test previews
 function loadTestPreviews() {
     const apiUrl = 'http://localhost:8080';
 
@@ -45,7 +43,6 @@ function loadTestPreviews() {
     });
 }
 
-// Function to fetch and display a specific test
 function getTest(id) {
     document.getElementById("test-preview").style.display = "none";
     const testSection = document.getElementById("test");
@@ -57,8 +54,8 @@ function getTest(id) {
         console.log(test)
 
         const question_count = test.questions.length;
-        document.getElementById("test-title").textContent = test.title;
-        document.getElementById("test-description").textContent = test.description;
+        document.getElementById("test-title").textContent = test.preview.title;
+        document.getElementById("test-description").textContent = test.preview.description;
         document.getElementById("questions-amount").textContent = question_count;
         const nextQuestionButton = document.getElementById("next-question-button");
         let currQuestion = 0;
@@ -72,7 +69,6 @@ function getTest(id) {
                 console.log("No option selected"); 
                 answer_ids.push('-1')
             }
-
             if (currQuestion == question_count - 2) {
                 nextQuestionButton.textContent = "Submit";
             } else if (currQuestion == question_count - 1) {
@@ -82,7 +78,7 @@ function getTest(id) {
             currQuestion++;
             renderQuestion(test.questions[currQuestion]);
         });
-        // Add an event listener to the "Start" button if needed
+
         const startButton = document.getElementById("start-button");
         startButton.addEventListener("click", function () {
             testSection.style.display = "none";
@@ -90,18 +86,16 @@ function getTest(id) {
         });
     });
 }
-// Function to render a question
+
 function renderQuestion(questionData) {
     const questionSection = document.getElementById("question");
     questionSection.style.display = "block";
 
-    // Update the question text
     const questionText = document.getElementById("question-text");
     questionText.textContent = questionData.question_text;
 
-    // Update the options as radio buttons
     const optionsList = document.getElementById("options-list");
-    optionsList.innerHTML = ""; // Clear previous options
+    optionsList.innerHTML = ""; 
 
     const optionsForm = document.getElementById("options-form");
     questionData.options.forEach((option, index) => {
@@ -110,8 +104,8 @@ function renderQuestion(questionData) {
         const label = document.createElement("label");
 
         input.type = "radio";
-        input.name = "option"; // All radio inputs share the same name to make them mutually exclusive
-        input.value = option.option_id; // Assuming option_id is unique
+        input.name = "option"; 
+        input.value = option.option_id; 
         input.id = `option-${index}`;
 
         label.textContent = `${index + 1}. ${option.option_text}`;
@@ -125,6 +119,5 @@ function renderQuestion(questionData) {
 }
 
 
-// Load and display test previews when the page loads
 window.addEventListener('load', loadTestPreviews);
 

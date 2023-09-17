@@ -1,43 +1,39 @@
-/* Reset default margin and padding */
 body, h1, h2, p, ul, li, button {
     margin: 0;
     padding: 0;
 }
 
-/* Apply a basic font and background color */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8; /* Off-white background */
-    line-height: 1.6; /* Improved line spacing for better readability */
+    background-color: #f8f8f8;
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    justify-content: space-between; /* Align content at the top and bottom */
-    min-height: 100vh; /* Ensure full viewport height */
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
 }
 
-/* Style the header section */
 header {
-    background-color: #282b29; /* Dark green */
+    background-color: #282b29;
     color: #fff;
     text-align: center;
-    padding: 20px 0; /* Increased padding */
+    padding: 20px 0;
     width: 80%;
-    border-radius: 5px; /* Rounded corners */
-    position: fixed; /* Fixed position to the top */
-    top: 0; /* Stick to the top */
-    z-index: 100; /* Ensure it's above other content */
+    border-radius: 5px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
 }
 
 header h1 {
-    font-size: 32px; /* Larger header text */
-    margin-bottom: 10px; /* Added margin */
+    font-size: 32px;
+    margin-bottom: 10px;
 }
 
-/* Style the navigation */
 nav ul {
     list-style: none;
-    text-align: center; /* Center the navigation links */
+    text-align: center;
 }
 
 nav ul li {
@@ -45,46 +41,42 @@ nav ul li {
     margin-right: 20px;
 }
 
-/* Style navigation buttons */
 button {
-    background-color: #282b29; /* Dark green */
+    background-color: #282b29;
     color: #fff;
     border: none;
     padding: 10px 20px;
-    margin-right: 10px; /* Added margin to separate buttons */
+    margin-right: 10px;
     cursor: pointer;
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s ease; /* Smooth hover transition */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-/* New button style for "List of Tests" and "Create a Test" */
 button#list-tests-link {
-    background-color: #337ab7; /* Blue */
+    background-color: #337ab7;
 }
 
 button#k {
-    background-color: #337ab7; /* Blue */
+    background-color: #337ab7;
 }
 
-/* Center and style the content sections */
 section {
     background-color: #fff;
     padding: 20px;
-    margin: 160px auto 0; /* Add top margin for the fixed header */
-    width: 80%; /* Set width to 80% */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow */
-    text-align: left; /* Center content within sections */
+    margin: 160px auto 0;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
 }
 
 section h2 {
     font-size: 24px;
 }
 
-/* Style individual test section */
 #test h2 {
     font-size: 24px;
-    margin-bottom: 10px; /* Added margin */
+    margin-bottom: 10px;
 }
 
 #test-description {
@@ -97,7 +89,7 @@ section h2 {
 }
 
 #start-button {
-    background-color: #282b29; /* Dark green */
+    background-color: #282b29;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -105,15 +97,13 @@ section h2 {
     cursor: pointer;
 }
 
-/* Style question section */
 #question h2 {
     font-size: 20px;
     margin-bottom: 10px;
 }
 
-/* Style next question button */
 #next-question-button {
-    background-color: #282b29; /* Dark green */
+    background-color: #282b29;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -121,78 +111,47 @@ section h2 {
     cursor: pointer;
 }
 
-/* Style footer */
 footer {
-    background-color: #282b29; /* Dark green */
+    background-color: #282b29;
     color: #fff;
     text-align: center;
-    padding: 20px 0; /* Increased padding */
+    padding: 20px 0;
     width: 80%;
-    border-radius: 5px; /* Rounded corners */
-    bottom: 0; /* Stick to the bottom */
-    z-index: 100; /* Ensure it's above other content */
+    border-radius: 5px;
+    bottom: 0;
+    z-index: 100;
 }
 
-
-/* Style the container for test previews using CSS Grid */
 #test-previews {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns with equal width */
-    gap: 20px; /* Gap between test previews */
-    padding: 20px; /* Add padding to create space between test previews */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
 }
 
-/* Style each individual test preview */
 .test-preview {
     background-color: #fff;
-    border: 1px solid #ccc; /* Add a tiny border */
+    border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
-    text-align: left; /* Align text to the left */
-    margin: 10px; /* Add margin to create space between test previews */
-    width: 90%; /* Full width within the grid cell */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions for background color and text color */
+    text-align: left;
+    margin: 10px;
+    width: 90%;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Add hover effect to fill with color and change text color to white */
 .test-preview:hover {
-    background-color: #337ab7; /* Change background color on hover (you can use any color you prefer) */
-    color: #fff; /* Change text color to white on hover */
+    background-color: #337ab7;
+    color: #fff;
 }
 
-/* Adjust the styling of elements inside each test preview if needed */
 .test-preview h3 {
     font-size: 18px;
     margin-bottom: 10px;
-    text-align: left; /* Align text inside h3 to the left */
+    text-align: left;
 }
 
 .test-preview p {
     font-size: 14px;
-    text-align: left; /* Align text inside p to the left */
-}
-
-/* Style individual test section */
-#test h2 {
-    font-size: 24px;
-    margin-bottom: 10px; /* Added margin */
-    text-align: left; /* Align text inside h2 to the left */
-}
-
-#test-description {
-    font-size: 16px;
-    margin-top: 10px;
-    text-align: left; /* Align text inside #test-description to the left */
-}
-
-#questions-amount {
-    font-weight: bold;
-    text-align: left; /* Align text inside #questions-amount to the left */
-}
-
-/* Style question section */
-#question h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    text-align: left; /* Align text inside #question h2 to the left */
+    text-align: left;
 }
