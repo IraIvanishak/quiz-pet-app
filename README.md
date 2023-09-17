@@ -58,7 +58,7 @@ CREATE TABLE questions (
 ```
 #### Mock Database Setup 
 
-To facilitate testing and development in isolated environments, you can create a mock database using SQL statements. These SQL statements simulate database interactions without connecting to a real database.
+To facilitate testing and development in isolated environments, you can create a mock database using SQL statements.
 ```sql
 -- Inserting real test data
 INSERT INTO tests (title, description, published_date)
