@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Website</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>Quiz Website</h1>
+        <nav>
+            <ul>
+                <li><button id="list-tests-link">List of Quiz</button></li>
+                <li><button id="k">Create a Quiz</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Section for creating a new test (hidden by default) -->
+    <section style="display: none;" id="create-test">
+        <h2>Create a Quiz</h2>
+        <!-- Form for creating a new test here -->
+    </section>
+
+    <!-- Test previews section -->
+    <section style="display: block;" id="test-preview">
+        <h2>Quiz Previews</h2>
+        <div id="test-previews">
+            <!-- Test previews will be created dynamically here -->
+        </div>
+    </section>
+
+    <!-- Section for an individual test (hidden by default) -->
+    <section style="display: none;" id="test">
+        <h2 id="test-title">Title Placeholder</h2>
+        <p id="test-description">Description Placeholder</p>
+        <p>Questions: <span style="display: inline-block;" id="questions-amount">Number Placeholder</span></p>
+        <button id="start-button">Start</button>
+    </section>
+
+    <!-- Section for each question (hidden by default) -->
+    <section style="display: none;" id="question">
+        <!-- Content for each question will be displayed here -->
+        <h2 id="question-text">Question Placeholder</h2>
+        <div id="options-list">
+            <!-- Options will be dynamically generated here as radio buttons -->
+        </div>
+        <button id="next-question-button">Next Question</button>
+    </section>
+
+    <!-- Section for displaying results (hidden by default) -->
+    <section style="display: none;" id="result">
+        <!-- Content for displaying results will be displayed here -->
+    </section>
+
+    <footer>
+        <p>&copy; 2023 My Quiz Website</p>
+    </footer>
+
+    <script src="index.js" ></script>
+</body>
+
+</html>
