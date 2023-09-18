@@ -26,7 +26,7 @@ type Question struct {
 type Option struct {
 	Option_id   int    `json:"option_id"`
 	Option_text string `json:"option_text"`
-	is_correct  bool
+	Is_correct  bool   `json:"is_correct"`
 }
 
 func AllTestPreview() ([]Test_preview, error) {
@@ -73,8 +73,13 @@ func TestByID(id_test int) (Test, error) {
 			return Test{}, err
 		}
 		var frontOptions []Option
+
 		for i, val := range options {
-			frontOptions = append(frontOptions, Option{Option_id: i, Option_text: val.Option_text})
+			frontOptions = append(frontOptions, Option{
+				Option_id:   i,
+				Option_text: val.Option_text,
+				Is_correct:  val.Is_correct,
+			})
 		}
 
 		question.Options = frontOptions
@@ -95,5 +100,22 @@ func TestByID(id_test int) (Test, error) {
 	}
 	test.Questions = questionArray
 	return test, nil
+}
 
+func TestAnswears(id_test int) ([]int, error) {
+	test, err := TestByID(id_test)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	var answears []int
+	for _, q := range test.Questions {
+		for i, o := range q.Options {
+			if o.Is_correct == true {
+				answears = append(answears, i)
+			}
+		}
+	}
+
+	return answears, nil
 }

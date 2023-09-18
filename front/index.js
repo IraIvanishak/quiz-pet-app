@@ -15,6 +15,32 @@ function makeGetRequest(url, callback) {
     xhr.send();
 }
 
+function makePostRequest(url, data, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                callback(xhr.responseText);
+            } else {
+                console.error('Request error:', xhr.status, xhr.statusText);
+            }
+        }
+    };
+
+    const jsonData = JSON.stringify(data);
+    xhr.send(jsonData);
+}
+
+function sendAnswers(id, answear_ids) {
+    const apiUrl = `http://localhost:8080/test?id=${id}`;
+    makePostRequest(apiUrl, answear_ids, function (response) {
+        console.log('Response data:', response);
+    });
+}
+
 function loadTestPreviews() {
     const apiUrl = 'http://localhost:8080';
 
@@ -66,13 +92,13 @@ function getTest(id) {
                 const selectedAnswerId = selectedOption.value;
                 answer_ids.push(selectedAnswerId)
             } else {
-                console.log("No option selected"); 
+                console.log("No option selected");
                 answer_ids.push('-1')
             }
             if (currQuestion == question_count - 2) {
                 nextQuestionButton.textContent = "Submit";
             } else if (currQuestion == question_count - 1) {
-                console.log(answer_ids);
+                sendAnswers(id, answer_ids)
                 return;
             }
             currQuestion++;
@@ -95,7 +121,7 @@ function renderQuestion(questionData) {
     questionText.textContent = questionData.question_text;
 
     const optionsList = document.getElementById("options-list");
-    optionsList.innerHTML = ""; 
+    optionsList.innerHTML = "";
 
     const optionsForm = document.getElementById("options-form");
     questionData.options.forEach((option, index) => {
@@ -104,8 +130,8 @@ function renderQuestion(questionData) {
         const label = document.createElement("label");
 
         input.type = "radio";
-        input.name = "option"; 
-        input.value = option.option_id; 
+        input.name = "option";
+        input.value = option.option_id;
         input.id = `option-${index}`;
 
         label.textContent = `${index + 1}. ${option.option_text}`;
@@ -117,6 +143,7 @@ function renderQuestion(questionData) {
         optionsList.appendChild(li);
     });
 }
+
 
 
 window.addEventListener('load', loadTestPreviews);
