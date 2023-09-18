@@ -103,11 +103,11 @@ git clone https://github.com/IraIvanishak/quiz-pet-app.git
 ```
 2. Navigate to the project directory:
 ```bash
-cd quiz-pet-app
+cd quiz-pet-app/back
 ```
-3. Build and run the application:
+3. Run the application:
 ```bash
-go build ./quiz-pet-app
+go run .
 ```
 
 
