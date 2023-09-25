@@ -61,6 +61,5 @@ func getTestResult(w http.ResponseWriter, r *http.Request) {
 			points++
 		}
 	}
-
-	fmt.Println(points)
+	w.Write([]byte(strconv.Itoa(points)))
 }
