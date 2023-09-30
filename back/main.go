@@ -12,26 +12,25 @@ import (
 var portN = ":8080"
 
 func main() {
-	// CORS configuration
 	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},                                               // Adjust this to specify allowed origins
-		AllowedMethods: []string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"}, // Adjust allowed methods
-		AllowedHeaders: []string{"Content-Type"},                                    // Adjust allowed headers
+		AllowedOrigins:   []string{"http://127.0.0.1:5500"}, // Specify the allowed origin here
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type"},
+		AllowCredentials: true,
 	})
 
 	defer config.DB.Close()
 
-	handler := c.Handler(http.DefaultServeMux)
 	r := chi.NewRouter()
+	r.Use(c.Handler)
 
 	r.Get("/", getAllTestPreview)
 	r.Post("/test", getTestResult)
 	r.Get("/test", getTestByID)
-
-	http.Handle("/", r)
+	r.Get("/test-res", getTestByID)
 
 	fmt.Printf("Server started on port %s\n", portN)
-	err := http.ListenAndServe(portN, handler)
+	err := http.ListenAndServe(portN, r)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}

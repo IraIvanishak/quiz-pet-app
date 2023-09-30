@@ -7,10 +7,20 @@ import (
 	"strconv"
 
 	"github.com/IraIvanishak/quiz-pet-app/models/quizes"
+	"github.com/google/uuid"
 )
 
 func getAllTestPreview(w http.ResponseWriter, r *http.Request) {
-	test_previews, err := quizes.AllTestPreview()
+	session_id, err := r.Cookie("session_id")
+	var results map[string]string
+	if err == nil {
+		results, err = quizes.GetAllUserResults(session_id.Value)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	test_previews, err := quizes.AllTestPreview(results)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -42,24 +52,33 @@ func getTestResult(w http.ResponseWriter, r *http.Request) {
 	id_test := r.URL.Query().Get("id")
 	id_test_i, _ := strconv.Atoi(id_test)
 
-	// checking the result
-	var points int
-
 	var answear_ids []string
 	err := json.NewDecoder(r.Body).Decode(&answear_ids)
 	if err != nil {
 		fmt.Println(err)
 	}
-	right_answear_ids, err := quizes.TestAnswears(id_test_i)
+
+	points, err := quizes.CountPoints(answear_ids, id_test_i)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	for i, val := range answear_ids {
-		val_i, _ := strconv.Atoi(val)
-		if val_i == right_answear_ids[i] {
-			points++
+	session_id, err := r.Cookie("session_id")
+	if err != nil {
+		fmt.Println(err)
+
+		session_id = &http.Cookie{
+			Name:     "session_id",
+			Value:    uuid.New().String(),
+			Path:     "/",
+			SameSite: http.SameSiteNoneMode,
+			Secure:   true,
+			HttpOnly: true,
 		}
+		http.SetCookie(w, session_id)
 	}
+	quizes.AddTestResultToSession(session_id.Value, id_test, points)
+
 	w.Write([]byte(strconv.Itoa(points)))
+
 }

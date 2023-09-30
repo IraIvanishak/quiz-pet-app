@@ -3,6 +3,7 @@ package quizes
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	"github.com/IraIvanishak/quiz-pet-app/config"
 )
@@ -11,6 +12,7 @@ type Test_preview struct {
 	Id          int    `json:"id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
+	Score       int    `json:"score"`
 }
 
 type Test struct {
@@ -29,7 +31,7 @@ type Option struct {
 	Is_correct  bool   `json:"is_correct"`
 }
 
-func AllTestPreview() ([]Test_preview, error) {
+func AllTestPreview(results map[string]string) ([]Test_preview, error) {
 	rows, err := config.DB.Query("SELECT id, title, description FROM tests")
 	if err != nil {
 		fmt.Println(err)
@@ -42,6 +44,13 @@ func AllTestPreview() ([]Test_preview, error) {
 		err = rows.Scan(&test.Id, &test.Title, &test.Description)
 		if err != nil {
 			fmt.Println(err)
+		}
+		point, exist := results[strconv.Itoa(test.Id)]
+		if exist {
+			score, _ := strconv.Atoi(point)
+			test.Score = score
+		} else {
+			test.Score = -1
 		}
 		test_previews = append(test_previews, test)
 	}
