@@ -65,6 +65,14 @@ CREATE TABLE questions (
   FOREIGN KEY (test_id) REFERENCES tests(id) ON DELETE CASCADE
 );
 ```
+#### `usersResults` Table
+
+```sql
+CREATE TABLE usersResults(
+    sessionId UUID PRIMARY KEY,
+    results JSON
+);
+```
 #### Mock Database Setup 
 
 To facilitate testing and development in isolated environments, you can create a mock database using SQL statements.
@@ -109,7 +117,7 @@ cd quiz-pet-app/back
 ```bash
 go run .
 ```
-
+4. Run index.html using Live Server
 
 ## Contributing
 If you'd like to contribute to this project, please follow these guidelines:
