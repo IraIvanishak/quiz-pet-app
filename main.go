@@ -11,9 +11,12 @@ import (
 
 var portN = ":8080"
 
+const maxRetries = 10
+
 func main() {
+
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://127.0.0.1:5500"},
+		AllowedOrigins:   []string{"http://localhost:8081"},
 		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type"},
 		AllowCredentials: true,
@@ -26,7 +29,7 @@ func main() {
 	r.Post("/test", getTestResult)
 	r.Get("/test", getTestByID)
 
-	fmt.Printf("Server started on port %s\n", portN)
+	fmt.Printf("Server is started on port %s\n", portN)
 	err := http.ListenAndServe(portN, r)
 	if err != nil {
 		fmt.Println("Error:", err)

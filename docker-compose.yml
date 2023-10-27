@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  frontend:
+    image: nginx:alpine
+    volumes:
+      - ./front:/usr/share/nginx/html
+    ports:
+      - "8081:80"
+    depends_on:
+      - web
+      
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quiz-pet-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASS}@db:5432/${DB_NAME}?sslmode=disable"
+    env_file:
+      - .env
+
+  db:
+    container_name: "pet-postgres"
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./migrations/mock.sql:/docker-entrypoint-initdb.d/mock.sql
+

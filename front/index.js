@@ -1,51 +1,53 @@
-function makeGetRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                callback(xhr.responseText);
-            } else {
-                console.error('Request error:', xhr.status, xhr.statusText);
-            }
-        }
+function makeRequest(url, method, data, callback) {
+    const options = {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',  // Important for handling cookies
     };
 
-    xhr.send();
-}
+    if (data) {
+        options.body = JSON.stringify(data);
+    }
 
-function makePostRequest(url, data, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                callback(xhr.responseText);
-            } else {
-                console.error('Request error:', xhr.status, xhr.statusText);
+    fetch(url, options)
+        .then(response => {
+            if (!response.ok) {
+                return Promise.reject(`Request error: ${response.status} ${response.statusText}`);
             }
-        }
-    };
-
-    const jsonData = JSON.stringify(data);
-    xhr.send(jsonData);
+            return response.json();
+        })
+        .then(data => callback(data))
+        .catch(error => console.error('Error:', error));
 }
 
-function sendAnswers(id, answear_ids) {
+function sendAnswers(id, answer_ids) {
     const apiUrl = `http://localhost:8080/test?id=${id}`;
-    makePostRequest(apiUrl, answear_ids, function (response) {
+    makeRequest(apiUrl, 'POST', answer_ids, function (response) {
         console.log('Response data:', response);
+        showResult(response);  // Assuming the response contains the result
     });
+}
+
+function showResult(result) {
+    const resultSection = document.getElementById('result');
+    resultSection.style.display = 'block';
+
+    const testSection = document.getElementById('test');
+    testSection.style.display = 'none';
+
+    const questionSection = document.getElementById('question');
+    questionSection.style.display = 'none';
+
+    // Assuming result is a string like "3/4"
+    resultSection.innerHTML = `<h2>Your Score: ${result}</h2>`;
 }
 
 function loadTestPreviews() {
     const apiUrl = 'http://localhost:8080';
-
-    makeGetRequest(apiUrl, function (response) {
-        const tests = JSON.parse(response);
+    makeRequest(apiUrl, 'GET', null, function (response) {
+        const tests = response;
         const testPreviewsContainer = document.getElementById('test-previews');
 
         tests.forEach(function (test) {
@@ -60,8 +62,9 @@ function loadTestPreviews() {
             });
 
             testPreview.innerHTML = `
-                <h3>${test.title}</h3>
-                <p>${test.description}</p>
+            <h3>${test.title}</h3>
+            <p>${test.description}</p>
+            ${test.score !== -1 ? `<div><label>Score: </label><span class="score">${test.score}</span></div>` : ''}
             `;
 
             testPreviewsContainer.appendChild(testPreview);
@@ -75,8 +78,8 @@ function getTest(id) {
     testSection.style.display = "block";
     const apiUrl = `http://localhost:8080/test?id=${id}`;
 
-    makeGetRequest(apiUrl, function (response) {
-        const test = JSON.parse(response);
+    makeRequest(apiUrl, 'GET', null, function (response) {
+        const test = response;
         console.log(test)
 
         const question_count = test.questions.length;
@@ -123,7 +126,6 @@ function renderQuestion(questionData) {
     const optionsList = document.getElementById("options-list");
     optionsList.innerHTML = "";
 
-    const optionsForm = document.getElementById("options-form");
     questionData.options.forEach((option, index) => {
         const li = document.createElement("li");
         const input = document.createElement("input");
@@ -137,14 +139,10 @@ function renderQuestion(questionData) {
         label.textContent = `${index + 1}. ${option.option_text}`;
         label.htmlFor = `option-${index}`;
 
-
         li.appendChild(input);
         li.appendChild(label);
         optionsList.appendChild(li);
     });
 }
 
-
-
 window.addEventListener('load', loadTestPreviews);
-
