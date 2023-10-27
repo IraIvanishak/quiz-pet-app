@@ -11,17 +11,7 @@ The main application serves as a REST API to interact with the quiz data.
 
 ## Getting Started
 
-1. Configure the `.env` file with the appropriate database credentials:
-```
-DB_HOST=<database_host>
-DB_USER=<database_user>
-DB_PASS=<database_password>
-DB_NAME=<database_name>
-```
-Replace `<database_host>`, `<database_user>`, `<database_password>`, and `<database_name>` with your database details.
-
-
-2. Run the application:
+Run the application:
 ```bash
 docker-compose up --build
 ```
