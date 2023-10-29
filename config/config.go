@@ -9,6 +9,7 @@ import (
 )
 
 var DB *sql.DB
+var ConnStr string
 
 func init() {
 
@@ -17,9 +18,9 @@ func init() {
 	password := os.Getenv("DB_PASS")
 	dbName := os.Getenv("DB_NAME")
 
-	connStr := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", host, user, password, dbName)
+	ConnStr = fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", host, user, password, dbName)
 
-	db, err := sql.Open("postgres", connStr)
+	db, err := sql.Open("postgres", ConnStr)
 	if err != nil {
 		fmt.Println("Error opening database connection:", err)
 	}

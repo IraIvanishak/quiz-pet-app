@@ -14,10 +14,14 @@ import (
 )
 
 const insertResult = `-- name: InsertResult :exec
-INSERT INTO usersresults (sessionid, results)
-VALUES ($1, $2)
-ON CONFLICT (sessionid)
-DO UPDATE SET results = $2
+INSERT INTO 
+    usersresults (sessionid, results)
+VALUES 
+    ($1, $2)
+ON CONFLICT 
+    (sessionid)
+DO UPDATE SET 
+    results = $2
 `
 
 type InsertResultParams struct {
@@ -31,7 +35,13 @@ func (q *Queries) InsertResult(ctx context.Context, arg InsertResultParams) erro
 }
 
 const questionsByTestID = `-- name: QuestionsByTestID :many
-SELECT question_text, options FROM questions WHERE test_id = $1
+SELECT 
+    question_text, 
+    options 
+FROM 
+    questions 
+WHERE 
+    test_id = $1
 `
 
 type QuestionsByTestIDRow struct {
@@ -63,7 +73,13 @@ func (q *Queries) QuestionsByTestID(ctx context.Context, testID int32) ([]Questi
 }
 
 const quizeByID = `-- name: QuizeByID :one
-SELECT title, description FROM tests WHERE id = $1
+SELECT 
+    title, 
+    description 
+FROM 
+    tests 
+WHERE 
+    id = $1
 `
 
 type QuizeByIDRow struct {
@@ -79,7 +95,12 @@ func (q *Queries) QuizeByID(ctx context.Context, id int32) (QuizeByIDRow, error)
 }
 
 const quizesAll = `-- name: QuizesAll :many
-SELECT id, title, description FROM tests
+SELECT 
+    id, 
+    title, 
+    description 
+FROM 
+    tests
 `
 
 type QuizesAllRow struct {
@@ -112,7 +133,12 @@ func (q *Queries) QuizesAll(ctx context.Context) ([]QuizesAllRow, error) {
 }
 
 const resultsByID = `-- name: ResultsByID :one
-SELECT results FROM usersresults WHERE sessionid = $1
+SELECT 
+    results 
+FROM 
+    usersresults 
+WHERE 
+    sessionid = $1
 `
 
 func (q *Queries) ResultsByID(ctx context.Context, sessionid uuid.UUID) (pqtype.NullRawMessage, error) {
