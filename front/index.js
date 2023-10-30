@@ -47,23 +47,25 @@ function showResult(result) {
 function loadTestPreviews() {
     const apiUrl = 'http://localhost:8080';
     makeRequest(apiUrl, 'GET', null, function (response) {
+
+        console.log(response);
         const tests = response;
         const testPreviewsContainer = document.getElementById('test-previews');
 
         tests.forEach(function (test) {
             const testPreview = document.createElement('div');
             testPreview.classList.add('test-preview');
-            const id = 'test_id_' + test.id;
+            const id = 'test_id_' + test.test.ID;
             testPreview.setAttribute('id', id);
 
             testPreview.addEventListener('click', function () {
                 console.log('Clicked ' + id);
-                getTest(test.id);
+                getTest(test.test.ID);
             });
 
             testPreview.innerHTML = `
-            <h3>${test.title}</h3>
-            <p>${test.description}</p>
+            <h3>${test.test.Title}</h3>
+            <p>${test.test.Description}</p>
             ${test.score !== -1 ? `<div><label>Score: </label><span class="score">${test.score}</span></div>` : ''}
             `;
 
@@ -83,8 +85,8 @@ function getTest(id) {
         console.log(test)
 
         const question_count = test.questions.length;
-        document.getElementById("test-title").textContent = test.preview.title;
-        document.getElementById("test-description").textContent = test.preview.description;
+        document.getElementById("test-title").textContent = test.preview.Title;
+        document.getElementById("test-description").textContent = test.preview.Description;
         document.getElementById("questions-amount").textContent = question_count;
         const nextQuestionButton = document.getElementById("next-question-button");
         let currQuestion = 0;
@@ -121,19 +123,19 @@ function renderQuestion(questionData) {
     questionSection.style.display = "block";
 
     const questionText = document.getElementById("question-text");
-    questionText.textContent = questionData.question_text;
+    questionText.textContent = questionData.QuestionText.String;
 
     const optionsList = document.getElementById("options-list");
     optionsList.innerHTML = "";
 
-    questionData.options.forEach((option, index) => {
+    questionData.Options.RawMessage.forEach((option, index) => {
         const li = document.createElement("li");
         const input = document.createElement("input");
         const label = document.createElement("label");
 
         input.type = "radio";
         input.name = "option";
-        input.value = option.option_id;
+        input.value = index;  // Assuming option index is used as value
         input.id = `option-${index}`;
 
         label.textContent = `${index + 1}. ${option.option_text}`;
