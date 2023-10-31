@@ -1,0 +1,6 @@
+version: "1"
+packages:
+  - path: "./storage/dbs/"
+    engine: "postgresql"
+    schema: "./migrations"
+    queries: "./storage/query/"
